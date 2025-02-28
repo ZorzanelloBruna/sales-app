@@ -1,19 +1,25 @@
 'use client'
 import { Layout } from "@/src/components/layout/layout";
 import { useState } from "react";
+import { useProdutoService } from "@/src/services";
+import { Produto } from "@/src/models/produtos";
 
 export default function CadastroProdutos() {
+
+    const service = useProdutoService();
     const [nome, setNome] = useState('');
     const [preco, setPreco] = useState('');
     const [descricao, setDescricao] = useState('');
 
     const submit = () => {
-        const produto = {
+        const produto : Produto = {
             nome: nome,
-            preco: preco,
+            preco: parseFloat(preco),
             descricao: descricao
         };
-        console.log(produto);
+        service
+            .salvar(produto)
+            .then(respostaProd => console.log(respostaProd));
     };
 
 
